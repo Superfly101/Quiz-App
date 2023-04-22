@@ -1,8 +1,12 @@
 import useAxios from "@/hooks/useAxios";
 import Question from "./Question";
 
-const Questions = () => {
-  const apiUrl = "/api.php?amount=10";
+type QuestionsProp = {
+  apiUrl: string;
+};
+
+const Questions = ({ apiUrl }: QuestionsProp) => {
+  // const apiUrl = "/api.php?amount=10";
   const { response, isLoading } = useAxios({ url: apiUrl });
   console.log(response);
   return (

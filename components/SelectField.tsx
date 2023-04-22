@@ -1,7 +1,7 @@
 import { Category } from "@/models/Category";
 import { Option } from "@/models/Option";
 import { FormLabel, Select, FormControl } from "@chakra-ui/react";
-import React, { Dispatch, useState } from "react";
+import React, { Dispatch } from "react";
 
 type SelectProp = {
   label: React.ReactNode;

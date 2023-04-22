@@ -10,6 +10,6 @@ export const difficultyOptions = [
 ];
 
 export const typeOptions = [
-  { id: "multiple", name: "Multiple Choise" },
+  { id: "multiple", name: "Multiple Choice" },
   { id: "boolean", name: "True/False" },
 ];
