@@ -11,6 +11,8 @@ type ProviderProp = {
 
 type QuestionContextType = {
   questions: Question[];
+  error: string;
+  isLoading: boolean;
   dispatch: Dispatch<QuestionActionsType>;
 };
 
@@ -18,7 +20,7 @@ export const QuestionContext = createContext<QuestionContextType>(
   {} as QuestionContextType
 );
 
-const QuestionContextProvider = ({ children }: ProviderProp) => {
+const QuestionProvider = ({ children }: ProviderProp) => {
   const [state, dispatch] = useReducer(QuestionsReducer, QuestionsInitState);
 
   console.log("Questions state: ", state);
@@ -30,4 +32,4 @@ const QuestionContextProvider = ({ children }: ProviderProp) => {
   );
 };
 
-export default QuestionContextProvider;
+export default QuestionProvider;

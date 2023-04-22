@@ -6,6 +6,7 @@ import { difficultyOptions, typeOptions } from "@/models/Option";
 import { useContext, useState } from "react";
 import LoadingSpinner from "./LoadingSpinner";
 import { QuestionContext } from "@/context/question-context";
+import { useRouter } from "next/router";
 
 const Settings = () => {
   const { response, error, isLoading } = useAxios({ url: "/api_category.php" });
@@ -31,6 +32,18 @@ const Settings = () => {
   }`;
   const questionsResponse = useAxios({ url: apiUrl });
 
+  const router = useRouter();
+
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    router.push("/questions");
+
+    dispatch({
+      type: "GET_QUESTIONS",
+      payload: questionsResponse.response.results,
+    });
+    dispatch({ type: "SET_LOADING", payload: questionsResponse.isLoading });
+  };
   if (error) {
     return (
       <h2 className="font-bold text-lg text-red">
@@ -39,47 +52,36 @@ const Settings = () => {
     );
   }
 
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
-    // console.log(questionsResponse);
-    // dispatch({
-    //   type: "GET_QUESTIONS",
-    //   payload: questionsResponse.response.results,
-    // });
-    // dispatch({ type: "SET_LOADING", payload: questionsResponse.isLoading });
-  };
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
   return (
-    <>
-      {isLoading && <LoadingSpinner />}
-      {!isLoading && (
-        <section className="w-full max-w-[40rem]">
-          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-            <SelectField
-              label="Category"
-              options={response.trivia_categories}
-              formData={formData}
-              setFormData={setFormData}
-            />
-            <SelectField
-              label="Difficulty"
-              options={difficultyOptions}
-              formData={formData}
-              setFormData={setFormData}
-            />
-            <SelectField
-              label="Type"
-              options={typeOptions}
-              formData={formData}
-              setFormData={setFormData}
-            />
-            <NumberField formData={formData} setFormData={setFormData} />
-            <Button w="full" colorScheme="blue" type="submit">
-              Get Started
-            </Button>
-          </form>
-        </section>
-      )}
-    </>
+    <section className="w-full max-w-[40rem]">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+        <SelectField
+          label="Category"
+          options={response.trivia_categories}
+          formData={formData}
+          setFormData={setFormData}
+        />
+        <SelectField
+          label="Difficulty"
+          options={difficultyOptions}
+          formData={formData}
+          setFormData={setFormData}
+        />
+        <SelectField
+          label="Type"
+          options={typeOptions}
+          formData={formData}
+          setFormData={setFormData}
+        />
+        <NumberField formData={formData} setFormData={setFormData} />
+        <Button w="full" colorScheme="blue" type="submit">
+          Get Started
+        </Button>
+      </form>
+    </section>
   );
 };
 
