@@ -7,14 +7,14 @@ type Prop = {
 type Answer = {
   question: string;
   answer: string;
-  correct: boolean;
+  isCorrect: boolean;
   correctAnswer: string;
 };
 
 type ContextType = {
   score: number;
   userAnswers: Answer[];
-  updateScore: () => void;
+  incrementScore: () => void;
   addAnswer: (answer: Answer) => void;
 };
 
@@ -26,7 +26,7 @@ const AnswerProvider = ({ children }: Prop) => {
 
   console.log("AnswerContext state: ", { score, userAnswers });
 
-  const updateScore = () => {
+  const incrementScore = () => {
     setScore((prev) => prev + 1);
   };
 
@@ -37,7 +37,7 @@ const AnswerProvider = ({ children }: Prop) => {
   const contextValue = {
     score,
     userAnswers,
-    updateScore,
+    incrementScore,
     addAnswer,
   };
 

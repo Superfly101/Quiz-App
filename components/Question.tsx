@@ -1,4 +1,5 @@
 // import { Question } from "@/models/Question";
+import { AnswerContext } from "@/context/answer-context";
 import {
   Heading,
   Text,
@@ -8,7 +9,7 @@ import {
   Radio,
 } from "@chakra-ui/react";
 import { decode } from "html-entities";
-import { Dispatch, useEffect, useState } from "react";
+import { Dispatch, useContext, useEffect, useState } from "react";
 
 type Prop = {
   question: string;
@@ -16,7 +17,6 @@ type Prop = {
   totalQuestions: number;
   correct_answer: string;
   incorrect_answers: string[];
-  updateScore: Dispatch<React.SetStateAction<number>>;
   next: () => void;
 };
 
@@ -26,11 +26,12 @@ const Question = ({
   totalQuestions,
   correct_answer,
   incorrect_answers,
-  updateScore,
   next,
 }: Prop) => {
   const [options, setOptions] = useState<string[]>([]);
   const [value, setValue] = useState("");
+
+  const { incrementScore, addAnswer } = useContext(AnswerContext);
 
   const getRandomInt = (max: number) => {
     return Math.floor(Math.random() * (max + 1));
@@ -39,7 +40,13 @@ const Question = ({
   const handleClick = () => {
     if (value) {
       const isCorrect = correct_answer === value;
-      if (isCorrect) updateScore((prev) => prev + 1);
+      if (isCorrect) incrementScore();
+      addAnswer({
+        question,
+        answer: value,
+        isCorrect,
+        correctAnswer: correct_answer,
+      });
       next();
     }
   };
