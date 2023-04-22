@@ -7,14 +7,32 @@ import {
   NumberDecrementStepper,
   FormControl,
 } from "@chakra-ui/react";
+import { Dispatch } from "react";
 
-const TextField = () => {
-  const handleChange = () => {};
+type formDataType = {
+  amount: string;
+  category: string;
+  difficulty: string;
+  type: string;
+};
+
+type CompProp = {
+  setFormData: Dispatch<React.SetStateAction<formDataType>>;
+  formData: formDataType;
+};
+
+const TextField = ({ setFormData, formData }: CompProp) => {
+  const handleChange = (value: string) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      amount: value,
+    }));
+  };
 
   return (
     <FormControl>
       <FormLabel>Amount of Questions</FormLabel>
-      <NumberInput defaultValue={10} min={0}>
+      <NumberInput value={formData.amount} onChange={handleChange} min={0}>
         <NumberInputField />
         <NumberInputStepper>
           <NumberIncrementStepper />
