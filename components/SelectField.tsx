@@ -1,23 +1,38 @@
 import { Category } from "@/models/Category";
 import { Option } from "@/models/Option";
 import { FormLabel, Select, FormControl } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { Dispatch, useState } from "react";
 
 type SelectProp = {
   label: React.ReactNode;
   options: Category[] | Option[];
+  formData: formDataType;
+  setFormData: Dispatch<React.SetStateAction<formDataType>>;
 };
 
-const SelectField = ({ label, options }: SelectProp) => {
-  const [value, setValue] = useState("");
+type formDataType = {
+  amount: string;
+  category: string;
+  difficulty: string;
+  type: string;
+};
 
+const SelectField = ({ label, options, formData, setFormData }: SelectProp) => {
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setValue(event.target.value);
+    setFormData((prevState) => ({
+      ...prevState,
+      [`${label}`.toLowerCase()]: event.target.value,
+    }));
   };
   return (
     <FormControl>
       <FormLabel>{label}</FormLabel>
-      <Select value={value} onChange={handleChange}>
+      <Select
+        required
+        placeholder={`Select ${label}`}
+        value={formData[`${label}`.toLowerCase() as keyof formDataType]}
+        onChange={handleChange}
+      >
         {options.map((option) => (
           <option key={option.id} value={option.id}>
             {option.name}
