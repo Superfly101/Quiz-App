@@ -23,7 +23,7 @@ export const QuestionContext = createContext<QuestionContextType>(
 const QuestionProvider = ({ children }: ProviderProp) => {
   const [state, dispatch] = useReducer(QuestionsReducer, QuestionsInitState);
 
-  console.log("Questions state: ", state);
+  // console.log("Questions state: ", state);
 
   return (
     <QuestionContext.Provider value={{ ...state, dispatch }}>
