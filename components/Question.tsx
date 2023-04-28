@@ -69,14 +69,9 @@ const Question = ({
       <Text size="lg">{decode(question)}</Text>
 
       <RadioGroup value={value} onChange={(e) => setValue(e)}>
-        <Stack w="full">
+        <Stack w="full" spacing="3">
           {options.map((option, index) => (
-            <Radio
-              value={option}
-              key={index}
-              colorScheme="blue"
-              variant="outline"
-            >
+            <Radio value={option} key={index} colorScheme="blue">
               {decode(option)}
             </Radio>
           ))}

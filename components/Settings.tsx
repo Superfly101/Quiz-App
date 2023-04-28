@@ -81,8 +81,14 @@ const Settings = () => {
           setFormData={setFormData}
         />
         <NumberField formData={formData} setFormData={setFormData} />
-        <Button w="full" colorScheme="blue" type="submit">
-          {questionIsLoading ? "Getting Started..." : "Get Started"}
+        <Button
+          w="full"
+          colorScheme="blue"
+          type="submit"
+          isLoading={questionIsLoading}
+          loadingText="Getting Started..."
+        >
+          Get Started
         </Button>
       </form>
     </section>
