@@ -18,13 +18,7 @@ const Questions = () => {
     }
   };
 
-  const checkAnswer = (event: React.MouseEvent<HTMLButtonElement>) => {
-    // const answer = event.currentTarget.value;
-    // const isCorrect = questions[questionNumber].correct_answer === answer;
-    // if (isCorrect) {
-    //   setScore((prev) => prev + 1);
-    // }
-  };
+  const checkAnswer = (event: React.MouseEvent<HTMLButtonElement>) => {};
 
   return (
     <section className="py-8 px-4 flex flex-col gap-6 max-w-[40rem] mx-auto">

@@ -7,7 +7,8 @@ type Prop = {
 type Answer = {
   question: string;
   answer: string;
-  isCorrect: boolean;
+  // isCorrect: boolean;
+  options: string[];
   correctAnswer: string;
 };
 

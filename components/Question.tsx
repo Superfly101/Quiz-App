@@ -9,7 +9,7 @@ import {
   Radio,
 } from "@chakra-ui/react";
 import { decode } from "html-entities";
-import { Dispatch, useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 type Prop = {
   question: string;
@@ -44,7 +44,8 @@ const Question = ({
       addAnswer({
         question,
         answer: value,
-        isCorrect,
+        // isCorrect,
+        options: options,
         correctAnswer: correct_answer,
       });
       next();
