@@ -2,14 +2,12 @@ import { Question } from "@/models/Question";
 
 type initialState = {
   questions: Question[];
-  error: string;
-  isLoading: boolean;
+  // error: string;
+  // isLoading: boolean;
 };
 
 export const QuestionsInitState = {
   questions: [],
-  error: "",
-  isLoading: true,
 };
 
 export type QuestionActionsType =
@@ -24,10 +22,10 @@ const QuestionsReducer = (
   switch (action.type) {
     case "GET_QUESTIONS":
       return { ...state, questions: action.payload };
-    case "SET_ERROR":
-      return { ...state, error: action.payload };
-    case "SET_LOADING":
-      return { ...state, isLoading: action.payload };
+    // case "SET_ERROR":
+    //   return { ...state, error: action.payload };
+    // case "SET_LOADING":
+    //   return { ...state, isLoading: action.payload };
 
     default:
       return state;

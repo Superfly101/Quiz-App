@@ -24,8 +24,6 @@ const AnswerProvider = ({ children }: Prop) => {
   const [score, setScore] = useState(0);
   const [userAnswers, setUserAnswers] = useState<Answer[]>([]);
 
-  console.log("AnswerContext state: ", { score, userAnswers });
-
   const incrementScore = () => {
     setScore((prev) => prev + 1);
   };

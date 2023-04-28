@@ -1,11 +1,10 @@
 import Question from "./Question";
 import { useContext, useState } from "react";
 import { QuestionContext } from "@/context/question-context";
-import LoadingSpinner from "./LoadingSpinner";
 import { useRouter } from "next/router";
 
 const Questions = () => {
-  const { questions, isLoading } = useContext(QuestionContext);
+  const { questions } = useContext(QuestionContext);
   const [questionNumber, setQuestionNumber] = useState(0);
   const [score, setScore] = useState(0);
 
@@ -29,15 +28,12 @@ const Questions = () => {
 
   return (
     <section className="py-8 px-4 flex flex-col gap-6 max-w-[40rem] mx-auto">
-      {isLoading && <LoadingSpinner />}
-      {!isLoading && (
-        <Question
-          {...questions[questionNumber]}
-          number={questionNumber}
-          totalQuestions={questions.length}
-          next={nextQuestion}
-        />
-      )}
+      <Question
+        {...questions[questionNumber]}
+        number={questionNumber}
+        totalQuestions={questions.length}
+        next={nextQuestion}
+      />
     </section>
   );
 };

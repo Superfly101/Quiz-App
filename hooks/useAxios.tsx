@@ -1,4 +1,3 @@
-import { Category } from "@/models/Category";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
@@ -17,7 +16,11 @@ const useAxios = ({ url }: PropType) => {
     const fetchData = () => {
       axios
         .get(url)
-        .then((res) => setResponse(res.data))
+        .then((res) => {
+          if (!res.data)
+            throw new Error("OOP, no questions found for the selected fields.");
+          setResponse(res.data);
+        })
         .catch((err) => setError(err))
         .finally(() => setIsLoading(false));
     };
