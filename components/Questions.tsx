@@ -2,11 +2,11 @@ import Question from "./Question";
 import { useContext, useState } from "react";
 import { QuestionContext } from "@/context/question-context";
 import { useRouter } from "next/router";
+import { Link } from "@chakra-ui/react";
 
 const Questions = () => {
   const { questions } = useContext(QuestionContext);
   const [questionNumber, setQuestionNumber] = useState(0);
-  const [score, setScore] = useState(0);
 
   const router = useRouter();
 
@@ -34,6 +34,10 @@ const Questions = () => {
         totalQuestions={questions.length}
         next={nextQuestion}
       />
+
+      <Link href="/" color="blue.400" _hover={{ color: "blue.500" }}>
+        Return to Settings
+      </Link>
     </section>
   );
 };
