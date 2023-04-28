@@ -1,12 +1,12 @@
 import SelectField from "./SelectField";
-import { Button, Box, Spinner } from "@chakra-ui/react";
+import { Alert, AlertDescription, AlertIcon, Button } from "@chakra-ui/react";
 import NumberField from "./NumberField";
 import useAxios from "@/hooks/useAxios";
 import { difficultyOptions, typeOptions } from "@/models/Option";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import LoadingSpinner from "./LoadingSpinner";
-import { QuestionContext } from "@/context/question-context";
 import { useRouter } from "next/router";
+import useQuestion from "@/hooks/useQuestion";
 
 const Settings = () => {
   const { response, error, isLoading } = useAxios({ url: "/api_category.php" });
@@ -19,7 +19,11 @@ const Settings = () => {
   };
   const [formData, setFormData] = useState(initState);
   const { amount, category, difficulty, type } = formData;
-  const { dispatch } = useContext(QuestionContext);
+  const {
+    fetchQuestions,
+    error: questionsError,
+    isLoading: questionIsLoading,
+  } = useQuestion();
 
   const apiUrl = `/api.php?amount=${amount}${
     category
@@ -30,19 +34,13 @@ const Settings = () => {
         : `&category=${category}`
       : ""
   }`;
-  const questionsResponse = useAxios({ url: apiUrl });
-
   const router = useRouter();
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    router.push("/questions");
 
-    dispatch({
-      type: "GET_QUESTIONS",
-      payload: questionsResponse.response.results,
-    });
-    dispatch({ type: "SET_LOADING", payload: questionsResponse.isLoading });
+    const responseCode = await fetchQuestions(apiUrl);
+    if (responseCode !== 1) router.push("/questions");
   };
   if (error) {
     return (
@@ -57,6 +55,12 @@ const Settings = () => {
   }
   return (
     <section className="w-full max-w-[40rem]">
+      {questionsError && (
+        <Alert status="error" my="1rem">
+          <AlertIcon />
+          <AlertDescription>{questionsError}</AlertDescription>
+        </Alert>
+      )}
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <SelectField
           label="Category"
@@ -78,7 +82,7 @@ const Settings = () => {
         />
         <NumberField formData={formData} setFormData={setFormData} />
         <Button w="full" colorScheme="blue" type="submit">
-          Get Started
+          {questionIsLoading ? "Getting Started..." : "Get Started"}
         </Button>
       </form>
     </section>
