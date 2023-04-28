@@ -9,9 +9,6 @@ const Score = () => {
   const { score, userAnswers } = useContext(AnswerContext);
   const { questions } = useContext(QuestionContext);
 
-  console.log(questions);
-  console.log({ userAnswers });
-
   return (
     <section className="py-8 px-4 max-w-[40rem] mx-auto">
       <Heading size="lg" textAlign="center">

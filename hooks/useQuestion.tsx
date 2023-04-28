@@ -17,7 +17,6 @@ const useQuestion = () => {
     const response = await fetch(`https://opentdb.com/${url}`);
 
     const result = await response.json();
-    console.log(result);
 
     if (!response.ok) {
       setIsLoading(false);
