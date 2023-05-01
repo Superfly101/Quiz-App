@@ -16,7 +16,7 @@ type ContextType = {
   userAnswers: Answer[];
   incrementScore: () => void;
   addAnswer: (answer: Answer) => void;
-  resetAnswers: () => void;
+  resetStates: () => void;
 };
 
 export const AnswerContext = createContext<ContextType>({} as ContextType);
@@ -33,8 +33,9 @@ const AnswerProvider = ({ children }: Prop) => {
     setUserAnswers((prev) => [...prev, answer]);
   };
 
-  const resetAnswers = () => {
+  const resetStates = () => {
     setUserAnswers([]);
+    setScore(0);
   };
 
   const contextValue = {
@@ -42,7 +43,7 @@ const AnswerProvider = ({ children }: Prop) => {
     userAnswers,
     incrementScore,
     addAnswer,
-    resetAnswers,
+    resetStates,
   };
 
   return (

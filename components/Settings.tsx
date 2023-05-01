@@ -43,11 +43,11 @@ const Settings = () => {
       : ""
   }`;
   const router = useRouter();
-  const { resetAnswers } = useContext(AnswerContext);
+  const { resetStates } = useContext(AnswerContext);
   const { dispatch } = useContext(QuestionContext);
 
   useEffect(() => {
-    resetAnswers();
+    resetStates();
     dispatch({ type: "GET_QUESTIONS", payload: [] });
   }, []);
 
