@@ -34,16 +34,16 @@ const Score = () => {
       <Link href="/" color="blue.400" _hover={{ color: "blue.500" }}>
         Return to Settings
       </Link>
-      <div className="p-4 flex flex-col gap-4">
+      <div className="py-4 flex flex-col gap-4">
         <Accordion allowToggle>
           <AccordionItem>
-            <AccordionButton justifyContent="space-between">
+            <AccordionButton justifyContent="space-between" paddingInline="0">
               <Heading size="sm" fontWeight="semibold">
                 Review Answers
               </Heading>
               <AccordionIcon />
             </AccordionButton>
-            <AccordionPanel>
+            <AccordionPanel paddingInline="0">
               <Stack spacing="1.5rem">
                 {userAnswers.map((answer, index) => (
                   <Answer key={index} index={index} {...answer} />
