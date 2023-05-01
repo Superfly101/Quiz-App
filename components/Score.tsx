@@ -1,17 +1,29 @@
 import { AnswerContext } from "@/context/answer-context";
 import { QuestionContext } from "@/context/question-context";
-import { Box, Button, Heading, Link, Stack, Text } from "@chakra-ui/react";
-import { useContext } from "react";
-import { decode } from "html-entities";
+import {
+  Accordion,
+  AccordionButton,
+  AccordionIcon,
+  AccordionItem,
+  AccordionPanel,
+  Heading,
+  Link,
+  Stack,
+  Text,
+} from "@chakra-ui/react";
+import { useContext, useEffect } from "react";
 import Answer from "./Answer";
 
 const Score = () => {
   const { score, userAnswers } = useContext(AnswerContext);
-  const { questions } = useContext(QuestionContext);
+  const { dispatch } = useContext(QuestionContext);
+  useEffect(() => {
+    dispatch({ type: "GET_QUESTIONS", payload: [] });
+  }, []);
 
   return (
     <section className="py-8 px-4 max-w-[40rem] mx-auto">
-      <Heading size="lg" textAlign="center">
+      <Heading size="lg" textAlign="center" fontWeight="semibold">
         Congrats on Completing the quiz
       </Heading>
 
@@ -23,12 +35,23 @@ const Score = () => {
         Return to Settings
       </Link>
       <div className="p-4 flex flex-col gap-4">
-        <Heading size="md">Review Answers</Heading>
-        <Stack spacing="1.5rem">
-          {userAnswers.map((answer, index) => (
-            <Answer key={index} index={index} {...answer} />
-          ))}
-        </Stack>
+        <Accordion allowToggle>
+          <AccordionItem>
+            <AccordionButton justifyContent="space-between">
+              <Heading size="sm" fontWeight="semibold">
+                Review Answers
+              </Heading>
+              <AccordionIcon />
+            </AccordionButton>
+            <AccordionPanel>
+              <Stack spacing="1.5rem">
+                {userAnswers.map((answer, index) => (
+                  <Answer key={index} index={index} {...answer} />
+                ))}
+              </Stack>
+            </AccordionPanel>
+          </AccordionItem>
+        </Accordion>
       </div>
     </section>
   );

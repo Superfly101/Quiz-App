@@ -1,12 +1,20 @@
 import SelectField from "./SelectField";
-import { Alert, AlertDescription, AlertIcon, Button } from "@chakra-ui/react";
+import {
+  Alert,
+  AlertDescription,
+  AlertIcon,
+  Button,
+  Heading,
+} from "@chakra-ui/react";
 import NumberField from "./NumberField";
 import useAxios from "@/hooks/useAxios";
 import { difficultyOptions, typeOptions } from "@/models/Option";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import LoadingSpinner from "./LoadingSpinner";
 import { useRouter } from "next/router";
 import useQuestion from "@/hooks/useQuestion";
+import { AnswerContext } from "@/context/answer-context";
+import { QuestionContext } from "@/context/question-context";
 
 const Settings = () => {
   const { response, error, isLoading } = useAxios({ url: "/api_category.php" });
@@ -35,6 +43,13 @@ const Settings = () => {
       : ""
   }`;
   const router = useRouter();
+  const { resetAnswers } = useContext(AnswerContext);
+  const { dispatch } = useContext(QuestionContext);
+
+  useEffect(() => {
+    resetAnswers();
+    dispatch({ type: "GET_QUESTIONS", payload: [] });
+  }, []);
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -55,6 +70,9 @@ const Settings = () => {
   }
   return (
     <section className="w-full max-w-[40rem]">
+      <Heading textAlign="center" size="lg" fontWeight="semibold">
+        Settings
+      </Heading>
       {questionsError && (
         <Alert status="error" my="1rem">
           <AlertIcon />
