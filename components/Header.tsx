@@ -1,5 +1,5 @@
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
-import { HStack, Heading, IconButton, useColorMode } from "@chakra-ui/react";
+import { Heading, IconButton, useColorMode } from "@chakra-ui/react";
 
 type Prop = {
   children: React.ReactNode;
